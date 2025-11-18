@@ -41,22 +41,153 @@ include CMakeFiles/rules.ninja
 
 cmake_ninja_workdir = C$:/.STUFF/coding/C/spirit_adventure/cmake-build-debug/
 # =============================================================================
+# Object build statements for STATIC_LIBRARY target game
+
+
+#############################################
+# Order-only phony target for game
+
+build cmake_object_order_depends_target_game: phony || .
+
+build CMakeFiles/game.dir/src/game.c.obj: C_COMPILER__game_unscanned_Debug C$:/.STUFF/coding/C/spirit_adventure/src/game.c || cmake_object_order_depends_target_game
+  CONFIG = Debug
+  DEP_FILE = CMakeFiles\game.dir\src\game.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\game.dir
+  OBJECT_FILE_DIR = CMakeFiles\game.dir\src
+
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target game
+
+
+#############################################
+# Link the static library libgame.a
+
+build libgame.a: C_STATIC_LIBRARY_LINKER__game_Debug CMakeFiles/game.dir/src/game.c.obj
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
+  OBJECT_DIR = CMakeFiles\game.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = libgame.a
+  TARGET_PDB = game.a.dbg
+
+# =============================================================================
+# Object build statements for STATIC_LIBRARY target map
+
+
+#############################################
+# Order-only phony target for map
+
+build cmake_object_order_depends_target_map: phony || .
+
+build CMakeFiles/map.dir/src/map.c.obj: C_COMPILER__map_unscanned_Debug C$:/.STUFF/coding/C/spirit_adventure/src/map.c || cmake_object_order_depends_target_map
+  CONFIG = Debug
+  DEP_FILE = CMakeFiles\map.dir\src\map.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\map.dir
+  OBJECT_FILE_DIR = CMakeFiles\map.dir\src
+
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target map
+
+
+#############################################
+# Link the static library libmap.a
+
+build libmap.a: C_STATIC_LIBRARY_LINKER__map_Debug CMakeFiles/map.dir/src/map.c.obj
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
+  OBJECT_DIR = CMakeFiles\map.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = libmap.a
+  TARGET_PDB = map.a.dbg
+
+# =============================================================================
+# Object build statements for STATIC_LIBRARY target player
+
+
+#############################################
+# Order-only phony target for player
+
+build cmake_object_order_depends_target_player: phony || .
+
+build CMakeFiles/player.dir/src/player.c.obj: C_COMPILER__player_unscanned_Debug C$:/.STUFF/coding/C/spirit_adventure/src/player.c || cmake_object_order_depends_target_player
+  CONFIG = Debug
+  DEP_FILE = CMakeFiles\player.dir\src\player.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\player.dir
+  OBJECT_FILE_DIR = CMakeFiles\player.dir\src
+
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target player
+
+
+#############################################
+# Link the static library libplayer.a
+
+build libplayer.a: C_STATIC_LIBRARY_LINKER__player_Debug CMakeFiles/player.dir/src/player.c.obj
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
+  OBJECT_DIR = CMakeFiles\player.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = libplayer.a
+  TARGET_PDB = player.a.dbg
+
+# =============================================================================
+# Object build statements for STATIC_LIBRARY target save
+
+
+#############################################
+# Order-only phony target for save
+
+build cmake_object_order_depends_target_save: phony || .
+
+build CMakeFiles/save.dir/src/save.c.obj: C_COMPILER__save_unscanned_Debug C$:/.STUFF/coding/C/spirit_adventure/src/save.c || cmake_object_order_depends_target_save
+  CONFIG = Debug
+  DEP_FILE = CMakeFiles\save.dir\src\save.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\save.dir
+  OBJECT_FILE_DIR = CMakeFiles\save.dir\src
+
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target save
+
+
+#############################################
+# Link the static library libsave.a
+
+build libsave.a: C_STATIC_LIBRARY_LINKER__save_Debug CMakeFiles/save.dir/src/save.c.obj
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
+  OBJECT_DIR = CMakeFiles\save.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = libsave.a
+  TARGET_PDB = save.a.dbg
+
+# =============================================================================
 # Object build statements for EXECUTABLE target spirit_adventure
 
 
 #############################################
 # Order-only phony target for spirit_adventure
 
-build cmake_object_order_depends_target_spirit_adventure: phony || .
+build cmake_object_order_depends_target_spirit_adventure: phony || cmake_object_order_depends_target_game cmake_object_order_depends_target_map cmake_object_order_depends_target_player cmake_object_order_depends_target_save
 
 build CMakeFiles/spirit_adventure.dir/main.c.obj: C_COMPILER__spirit_adventure_unscanned_Debug C$:/.STUFF/coding/C/spirit_adventure/main.c || cmake_object_order_depends_target_spirit_adventure
   CONFIG = Debug
   DEP_FILE = CMakeFiles\spirit_adventure.dir\main.c.obj.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  INCLUDES = -IC:/.STUFF/coding/C/spirit_adventure/include
   OBJECT_DIR = CMakeFiles\spirit_adventure.dir
   OBJECT_FILE_DIR = CMakeFiles\spirit_adventure.dir
-  TARGET_COMPILE_PDB = CMakeFiles\spirit_adventure.dir\
-  TARGET_PDB = spirit_adventure.pdb
 
 
 # =============================================================================
@@ -66,17 +197,16 @@ build CMakeFiles/spirit_adventure.dir/main.c.obj: C_COMPILER__spirit_adventure_u
 #############################################
 # Link the executable spirit_adventure.exe
 
-build spirit_adventure.exe: C_EXECUTABLE_LINKER__spirit_adventure_Debug CMakeFiles/spirit_adventure.dir/main.c.obj
+build spirit_adventure.exe: C_EXECUTABLE_LINKER__spirit_adventure_Debug CMakeFiles/spirit_adventure.dir/main.c.obj | libgame.a libmap.a libplayer.a libsave.a || libgame.a libmap.a libplayer.a libsave.a
   CONFIG = Debug
   FLAGS = -g
-  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = libgame.a  libmap.a  libplayer.a  libsave.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\spirit_adventure.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = CMakeFiles\spirit_adventure.dir\
   TARGET_FILE = spirit_adventure.exe
   TARGET_IMPLIB = libspirit_adventure.dll.a
-  TARGET_PDB = spirit_adventure.pdb
+  TARGET_PDB = spirit_adventure.exe.dbg
 
 
 #############################################
@@ -104,6 +234,14 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # =============================================================================
 # Target aliases.
 
+build game: phony libgame.a
+
+build map: phony libmap.a
+
+build player: phony libplayer.a
+
+build save: phony libsave.a
+
 build spirit_adventure: phony spirit_adventure.exe
 
 # =============================================================================
@@ -121,7 +259,7 @@ build codegen: phony
 #############################################
 # Folder: C:/.STUFF/coding/C/spirit_adventure/cmake-build-debug
 
-build all: phony spirit_adventure.exe
+build all: phony libgame.a libmap.a libplayer.a libsave.a spirit_adventure.exe
 
 # =============================================================================
 # Built-in targets
@@ -130,14 +268,14 @@ build all: phony spirit_adventure.exe
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja C$:/.STUFF/coding/C/spirit_adventure/cmake-build-debug/cmake_install.cmake: RERUN_CMAKE | C$:/.STUFF/coding/C/spirit_adventure/CMakeLists.txt C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeCCompiler.cmake.in C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeCCompilerABI.c C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeCInformation.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeCommonLanguageInclude.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeCompilerIdDetection.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeDetermineCCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeDetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeDetermineCompilerSupport.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeDetermineRCCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeDetermineSystem.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeFindBinUtils.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeGenericSystem.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeInitializeConfigs.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeLanguageInformation.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeParseImplicitIncludeInfo.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeParseImplicitLinkInfo.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeParseLibraryArchitecture.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeRCCompiler.cmake.in C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeRCInformation.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeSystem.cmake.in C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeSystemSpecificInformation.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeSystemSpecificInitialize.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeTestCCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeTestCompilerCommon.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeTestRCCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/ADSP-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/ARMCC-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/ARMClang-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/AppleClang-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/Borland-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/Bruce-C-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/Clang-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/Clang-DetermineCompilerInternal.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/Compaq-C-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/Cray-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/CrayClang-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/Embarcadero-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/Fujitsu-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/GHS-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/GNU-C-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/GNU-C.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/GNU-FindBinUtils.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/GNU.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/HP-C-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/IAR-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/IBMClang-C-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/Intel-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/LCC-C-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/MSVC-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/NVHPC-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/NVIDIA-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/OrangeC-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/PGI-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/PathScale-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/SCO-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/SDCC-C-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/SunPro-C-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/TI-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/TIClang-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/Tasking-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/TinyCC-C-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/VisualAge-C-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/Watcom-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/XL-C-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/XLClang-C-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/zOS-C-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Internal/CMakeCLinkerInformation.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Internal/CMakeCommonLinkerInformation.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Internal/CMakeDetermineLinkerId.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Internal/CMakeInspectCLinker.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Internal/FeatureTesting.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Linker/GNU-C.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Linker/GNU.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Linker/GNU.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Linker/Windows-GNU-C.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Linker/Windows-GNU.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows-GNU-C-ABI.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows-GNU-C.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows-GNU.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows-Initialize.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows-windres.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/WindowsPaths.cmake CMakeCache.txt CMakeFiles/4.0.2/CMakeCCompiler.cmake CMakeFiles/4.0.2/CMakeRCCompiler.cmake CMakeFiles/4.0.2/CMakeSystem.cmake
+build build.ninja C$:/.STUFF/coding/C/spirit_adventure/cmake-build-debug/cmake_install.cmake: RERUN_CMAKE | C$:/.STUFF/coding/C/spirit_adventure/CMakeLists.txt C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeCInformation.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeCommonLanguageInclude.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeGenericSystem.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeInitializeConfigs.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeLanguageInformation.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeRCInformation.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeSystemSpecificInformation.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeSystemSpecificInitialize.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/GNU-C.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/GNU.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Internal/CMakeCLinkerInformation.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Internal/CMakeCommonLinkerInformation.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Linker/GNU-C.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Linker/GNU.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Linker/GNU.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Linker/Windows-GNU-C.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Linker/Windows-GNU.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows-GNU-C-ABI.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows-GNU-C.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows-GNU.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows-Initialize.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows-windres.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/WindowsPaths.cmake CMakeCache.txt CMakeFiles/4.0.2/CMakeCCompiler.cmake CMakeFiles/4.0.2/CMakeRCCompiler.cmake CMakeFiles/4.0.2/CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build C$:/.STUFF/coding/C/spirit_adventure/CMakeLists.txt C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeCCompiler.cmake.in C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeCCompilerABI.c C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeCInformation.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeCommonLanguageInclude.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeCompilerIdDetection.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeDetermineCCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeDetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeDetermineCompilerSupport.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeDetermineRCCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeDetermineSystem.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeFindBinUtils.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeGenericSystem.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeInitializeConfigs.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeLanguageInformation.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeParseImplicitIncludeInfo.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeParseImplicitLinkInfo.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeParseLibraryArchitecture.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeRCCompiler.cmake.in C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeRCInformation.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeSystem.cmake.in C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeSystemSpecificInformation.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeSystemSpecificInitialize.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeTestCCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeTestCompilerCommon.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeTestRCCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/ADSP-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/ARMCC-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/ARMClang-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/AppleClang-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/Borland-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/Bruce-C-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/Clang-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/Clang-DetermineCompilerInternal.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/Compaq-C-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/Cray-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/CrayClang-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/Embarcadero-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/Fujitsu-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/GHS-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/GNU-C-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/GNU-C.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/GNU-FindBinUtils.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/GNU.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/HP-C-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/IAR-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/IBMClang-C-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/Intel-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/LCC-C-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/MSVC-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/NVHPC-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/NVIDIA-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/OrangeC-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/PGI-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/PathScale-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/SCO-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/SDCC-C-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/SunPro-C-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/TI-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/TIClang-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/Tasking-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/TinyCC-C-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/VisualAge-C-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/Watcom-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/XL-C-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/XLClang-C-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/zOS-C-DetermineCompiler.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Internal/CMakeCLinkerInformation.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Internal/CMakeCommonLinkerInformation.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Internal/CMakeDetermineLinkerId.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Internal/CMakeInspectCLinker.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Internal/FeatureTesting.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Linker/GNU-C.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Linker/GNU.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Linker/GNU.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Linker/Windows-GNU-C.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Linker/Windows-GNU.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows-GNU-C-ABI.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows-GNU-C.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows-GNU.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows-Initialize.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows-windres.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/WindowsPaths.cmake CMakeCache.txt CMakeFiles/4.0.2/CMakeCCompiler.cmake CMakeFiles/4.0.2/CMakeRCCompiler.cmake CMakeFiles/4.0.2/CMakeSystem.cmake: phony
+build C$:/.STUFF/coding/C/spirit_adventure/CMakeLists.txt C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeCInformation.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeCommonLanguageInclude.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeGenericSystem.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeInitializeConfigs.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeLanguageInformation.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeRCInformation.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeSystemSpecificInformation.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeSystemSpecificInitialize.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/GNU-C.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/GNU.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Internal/CMakeCLinkerInformation.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Internal/CMakeCommonLinkerInformation.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Linker/GNU-C.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Linker/GNU.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Linker/GNU.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Linker/Windows-GNU-C.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Linker/Windows-GNU.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows-GNU-C-ABI.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows-GNU-C.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows-GNU.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows-Initialize.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows-windres.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows.cmake C$:/Users/emara/AppData/Local/Programs/CLion$ 2025.2.2/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/WindowsPaths.cmake CMakeCache.txt CMakeFiles/4.0.2/CMakeCCompiler.cmake CMakeFiles/4.0.2/CMakeRCCompiler.cmake CMakeFiles/4.0.2/CMakeSystem.cmake: phony
 
 
 #############################################
