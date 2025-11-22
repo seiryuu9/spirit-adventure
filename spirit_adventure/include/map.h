@@ -12,6 +12,7 @@ typedef enum { FRIENDLY, ENEMY, NEUTRAL } NPCType;
 typedef struct {
     char *name;
     char *description;
+    int x, y;
 } Item;
 
 // NPC

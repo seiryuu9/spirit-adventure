@@ -1,7 +1,7 @@
 {
 	"InstallScripts" : 
 	[
-		"C:/.STUFF/coding/C/spirit_adventure/cmake-build-debug/cmake_install.cmake"
+		"C:/.STUFF/coding/C/adventure/spirit_adventure/cmake-build-debug/cmake_install.cmake"
 	],
 	"Parallel" : false
 }

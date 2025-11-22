@@ -118,7 +118,7 @@ rule CUSTOM_COMMAND
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = "C:\Users\emara\AppData\Local\Programs\CLion 2025.2.2\bin\cmake\win\x64\bin\cmake.exe" --regenerate-during-build -SC:\.STUFF\coding\C\spirit_adventure -BC:\.STUFF\coding\C\spirit_adventure\cmake-build-debug
+  command = "C:\Users\emara\AppData\Local\Programs\CLion 2025.2.2\bin\cmake\win\x64\bin\cmake.exe" --regenerate-during-build -SC:\.STUFF\coding\C\adventure\spirit_adventure -BC:\.STUFF\coding\C\adventure\spirit_adventure\cmake-build-debug
   description = Re-running CMake...
   generator = 1
 

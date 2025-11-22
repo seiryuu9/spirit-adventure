@@ -1,4 +1,4 @@
-#ifndef SPIRIT_ADVENTURE_PLAYER_H
+#ifndef SPIRIT_ADVENTURE_PLAYER_H //include guard, so the file is only included once
 #define SPIRIT_ADVENTURE_PLAYER_H
 
 #include "map.h"
