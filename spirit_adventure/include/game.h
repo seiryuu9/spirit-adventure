@@ -16,9 +16,9 @@ typedef enum {
     INTERACT_FIGHT
 } InteractionType;
 
-// movement inside a room (grid-based)
+// movement inside a room - only needs one room
 int movePlayerInRoom(Player *player, Room *room, Direction dir);
-// movement between rooms through doors
+// movement between rooms through doors - needs the map of the rooms
 int movePlayerToRoom(Player *player, Room *map, Direction dir);
 
 // info about current room

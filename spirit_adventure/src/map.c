@@ -2,7 +2,7 @@
 #include "../include/map.h"
 
 Room *initializeMap(void) {
-    Room *map = malloc(sizeof(Room) * ROOM_COUNT);
+    Room *map = malloc(sizeof(Room) * ROOM_COUNT); // array of 6 rooms of type Room in heap
     if (!map) {return NULL;}
 
 // room 1 3x3
@@ -10,9 +10,9 @@ Room *initializeMap(void) {
     map[0].description = "You find yourself in the middle of a room that looks like it's supposed to resemble the inside of a shrine. Everything looks abandoned.";
     map[0].width = 3;
     map[0].height = 3;
-    map[0].grid = malloc(sizeof(char *) * map[0].height);
-    for (int i = 0; i < map[0].height; i++) {
-        map[0].grid[i] = malloc(sizeof(char) * (map[0].width + 1));
+    map[0].grid = malloc(sizeof(char *) * map[0].height); // mem for array of char pointers for each row
+    for (int i = 0; i < map[0].height; i++) { // for each row / pointer allocate an array of chars
+        map[0].grid[i] = malloc(sizeof(char) * (map[0].width + 1)); // '\0'
     }
     map[0].grid[2][0] = ' '; map[0].grid[2][1] = 'D'; map[0].grid[2][2] = 'N';
     map[0].grid[1][0] = 'D'; map[0].grid[1][1] = ' '; map[0].grid[1][2] = 'N';
@@ -185,11 +185,11 @@ void freeMap(Room *map) {
     if (!map) return;
 
     for (int r = 0; r < ROOM_COUNT; r++) {
-        Room *room = &map[r];
+        Room *room = &map[r]; // pointer to current room
 
         // frees items
         for (int i = 0; i < room->itemCount; i++) {
-            if (room->items[i]) {
+            if (room->items[i]) { // easier way of accessing the item pointer (*room).items[i]
                 free(room->items[i]);
             }
         }
@@ -209,7 +209,7 @@ void freeMap(Room *map) {
             for (int y = 0; y < room->height; y++) {
                 free(room->grid[y]);
             }
-            free(room->grid);
+            free(room->grid); // array of row pointers
         }
     }
     free(map);

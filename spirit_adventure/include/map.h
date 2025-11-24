@@ -4,7 +4,7 @@
 #define SPIRIT_ADVENTURE_MAP_H
 
 #define MAX_ITEMS 2 //in one room on the ground
-#define MAX_NPCS 12
+#define MAX_NPCS 2
 #define ROOM_COUNT 6
 
 typedef enum { FRIENDLY, ENEMY, NEUTRAL } NPCType;
@@ -29,7 +29,7 @@ typedef struct {
     char *description;
     int width;
     int height;
-    char **grid; // ' ' = empty, 'D' = door, 'N' = npc, 'I' = item
+    char **grid; // ' ' = empty, 'D' = door, 'N' = npc, 'I' = item (dynamic 2D array)
     Item *items[MAX_ITEMS];
     int itemCount;
     NPC *npcs[MAX_NPCS];
