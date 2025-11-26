@@ -6,8 +6,16 @@
 #define MAX_ITEMS 2 //in one room on the ground
 #define MAX_NPCS 2
 #define ROOM_COUNT 6
+#define MAX_DOORS 4
 
 typedef enum { FRIENDLY, ENEMY, NEUTRAL } NPCType;
+
+typedef enum {
+    NORTH,
+    SOUTH,
+    EAST,
+    WEST
+} Direction;
 
 typedef struct {
     char *name;
@@ -25,6 +33,13 @@ typedef struct {
 } NPC;
 
 typedef struct {
+    Direction dir;    // direction which door leads to
+    int leadsTo;      // index of room where the door leads
+    int x, y;         // current door position
+    int exitX, exitY; // position in the room it leads to
+} Door;
+
+typedef struct {
     char *name;
     char *description;
     int width;
@@ -34,7 +49,10 @@ typedef struct {
     int itemCount;
     NPC *npcs[MAX_NPCS];
     int npcCount;
+    Door doors[MAX_DOORS];
+    int doorCount;
 } Room;
+
 
 Room *initializeMap(void);
 void freeMap(Room *map);

@@ -5,13 +5,6 @@
 #include "player.h"
 
 typedef enum {
-    NORTH,
-    SOUTH,
-    EAST,
-    WEST
-} Direction;
-
-typedef enum {
     INTERACT_TALK,
     INTERACT_FIGHT
 } InteractionType;

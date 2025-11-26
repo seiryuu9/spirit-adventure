@@ -1,6 +1,49 @@
 #include <stdlib.h>
 #include "../include/map.h"
 
+void addItem(Room *room, const char *name, int x, int y) {
+    if (room->itemCount >= MAX_ITEMS) {
+        return;
+    }
+    Item *item = malloc(sizeof(Item));
+    item->name = name;
+    item->x = x;
+    item->y = y;
+    room->items[room->itemCount] = item;
+    room->itemCount++;
+}
+
+void addNpc(Room *room, const char *name, NPCType type, int health, int x, int y, Item *reward) {
+    if (room->npcCount >= MAX_NPCS) {
+        return;
+    }
+    NPC *npc = malloc(sizeof(NPC));
+    npc->name = name;
+    npc->type = type;
+    npc->health = health;
+    npc->x = x;
+    npc->y = y;
+    npc->reward = reward;
+    room->npcs[room->npcCount] = npc;
+    room->npcCount++;
+}
+
+void addDoor(Room *room, Direction dir, int leadsTo, int x, int y, int exitX, int exitY) {
+    if (room->doorCount >= MAX_DOORS) {
+        return;
+    }
+
+    Door *door = &room->doors[room->doorCount];
+    door->dir = dir;
+    door->leadsTo = leadsTo;
+    door->x = x;
+    door->y = y;
+    door->exitX = exitX;
+    door->exitY = exitY;
+
+    room->doorCount++;
+}
+
 Room *initializeMap(void) {
     Room *map = malloc(sizeof(Room) * ROOM_COUNT); // array of 6 rooms of type Room in heap
     if (!map) {return NULL;}
@@ -18,20 +61,13 @@ Room *initializeMap(void) {
     map[0].grid[1][0] = 'D'; map[0].grid[1][1] = ' '; map[0].grid[1][2] = 'N';
     map[0].grid[0][0] = ' '; map[0].grid[0][1] = 'D'; map[0].grid[0][2] = ' ';
 
-    map[0].itemCount = 0;
+    addNpc(&map[0], "Mysterious Monk", FRIENDLY, -1, 2, 2, NULL);
+    addNpc(&map[0], "Wandering Spirit", NEUTRAL, -1, 2, 1, NULL);
 
-    map[0].npcCount = 2;
-    map[0].npcs[0] = malloc(sizeof(NPC));
-    map[0].npcs[0]->name = "Mysterious Monk";
-    map[0].npcs[0]->type = FRIENDLY;
-    map[0].npcs[0]->x = 2;
-    map[0].npcs[0]->y = 2;
-
-    map[0].npcs[1] = malloc(sizeof(NPC));
-    map[0].npcs[1]->name = "Wandering Spirit";
-    map[0].npcs[1]->type = NEUTRAL;
-    map[0].npcs[1]->x = 2;
-    map[0].npcs[1]->y = 1;
+    addDoor(&map[0], NORTH, 1, 1, 2, 2, 0);
+    addDoor(&map[0], WEST, 3, 0, 1, 3, 1);
+    addDoor(&map[0], SOUTH, 4, 1, 0, 2, 3);
+    addDoor(&map[0], EAST, 5, 2, 1, 0, 0);
 
 // room 2 4x4
     map[1].name = "Garden";
@@ -47,18 +83,11 @@ Room *initializeMap(void) {
     map[1].grid[1][0] = ' '; map[1].grid[1][1] = ' '; map[1].grid[1][2] = ' '; map[1].grid[1][3] = ' ';
     map[1].grid[0][0] = 'I'; map[1].grid[0][1] = ' '; map[1].grid[0][2] = 'D'; map[1].grid[0][3] = ' ';
 
-    map[1].itemCount = 2;
-    map[1].items[0] = malloc(sizeof(Item));
-    map[1].items[0]->name = "Fox mask part";
-    map[1].items[0]->x = 0;
-    map[1].items[0]->y = 0;
+    addItem(&map[1], "Fox mask part", 0, 0);
+    addItem(&map[1], "Dragon horn", 2, 2);
 
-    map[1].items[1] = malloc(sizeof(Item));
-    map[1].items[1]->name = "Dragon horn";
-    map[1].items[1]->x = 2;
-    map[1].items[1]->y = 2;
-
-    map[1].npcCount = 0;
+    addDoor(&map[1], SOUTH, 0, 2, 0, 1, 2);
+    addDoor(&map[1], WEST, 2, 0, 2, 3, 1);
 
 // room 3 4x4
     map[2].name = "Outer Courtyard";
@@ -74,25 +103,12 @@ Room *initializeMap(void) {
     map[2].grid[1][0] = ' '; map[2].grid[1][1] = ' '; map[2].grid[1][2] = 'N'; map[2].grid[1][3] = 'D';
     map[2].grid[0][0] = 'I'; map[2].grid[0][1] = ' '; map[2].grid[0][2] = ' '; map[2].grid[0][3] = ' ';
 
-    map[2].itemCount = 2;
-    map[2].items[0] = malloc(sizeof(Item));
-    map[2].items[0]->name = "Fox mask part";
-    map[2].items[0]->x = 0;
-    map[2].items[0]->y = 0;
+    addItem(&map[2], "Fox mask part", 0, 0);
+    addItem(&map[2], "Fox mask part", 0, 3);
 
-    map[2].items[1] = malloc(sizeof(Item));
-    map[2].items[1]->name = "Fox mask part";
-    map[2].items[1]->x = 0;
-    map[2].items[1]->y = 3;
+    addNpc(&map[2], "Hostile spirit", ENEMY, 50, 2, 1, NULL);
 
-    map[2].npcCount = 1;
-    map[2].npcs[0] = malloc(sizeof(NPC));
-    map[2].npcs[0]->name = "Hostile spirit";
-    map[2].npcs[0]->type = ENEMY;
-    map[2].npcs[0]->health = 50;
-    map[2].npcs[0]->x = 2;
-    map[2].npcs[0]->y = 1;
-    map[2].npcs[0]->reward = NULL;
+    addDoor(&map[2], EAST, 1, 3, 1, 0, 2);
 
 // room 4 4x4
     map[3].name = "Library";
@@ -108,23 +124,14 @@ Room *initializeMap(void) {
     map[3].grid[1][0] = ' '; map[3].grid[1][1] = ' '; map[3].grid[1][2] = 'N'; map[3].grid[1][3] = 'D';
     map[3].grid[0][0] = ' '; map[3].grid[0][1] = ' '; map[3].grid[0][2] = ' '; map[3].grid[0][3] = ' ';
 
-    map[3].itemCount = 1;
-    map[3].items[0] = malloc(sizeof(Item));
-    map[3].items[0]->name = "Dragon horn";
-    map[3].items[0]->x = 1;
-    map[3].items[0]->y = 2;
+    addItem(&map[3], "Dragon horn", 1, 2);
 
-    map[3].npcCount = 1;
-    map[3].npcs[0] = malloc(sizeof(NPC));
-    map[3].npcs[0]->name = "Shiny hostile spirit";
-    map[3].npcs[0]->type = ENEMY;
-    map[3].npcs[0]->health = 75;
-    map[3].npcs[0]->x = 2;
-    map[3].npcs[0]->y = 1;
-    map[3].npcs[0]->reward = malloc(sizeof(Item));
-    map[3].npcs[0]->reward->name = "Dragon horn";
-    map[3].npcs[0]->reward->description = "The spirit dropped a Dragon horn after being defeated.";
+    Item *dragonReward = malloc(sizeof(Item));
+    dragonReward->name = "Dragon horn";
+    dragonReward->description = "The spirit dropped a Dragon horn after being defeated.";
+    addNpc(&map[3], "Shiny hostile spirit", ENEMY, 75, 2, 1, dragonReward);
 
+    addDoor(&map[3], EAST, 0, 3, 1, 0, 1);
 
 // room 5 4x4
     map[4].name = "Tea Room";
@@ -140,30 +147,12 @@ Room *initializeMap(void) {
     map[4].grid[1][0] = ' '; map[4].grid[1][1] = ' '; map[4].grid[1][2] = ' '; map[4].grid[1][3] = ' ';
     map[4].grid[0][0] = 'N'; map[4].grid[0][1] = ' '; map[4].grid[0][2] = 'N'; map[4].grid[0][3] = ' ';
 
-    map[4].itemCount = 1;
-    map[4].items[0] = malloc(sizeof(Item));
-    map[4].items[0]->name = "Fox mask part";
-    map[4].items[0]->x = 3;
-    map[4].items[0]->y = 2;
+    addItem(&map[4], "Fox mask part", 3, 2);
 
-    map[4].npcCount = 2;
-    map[4].npcs[0] = malloc(sizeof(NPC));
-    map[4].npcs[0]->name = "Shiny hostile spirit";
-    map[4].npcs[0]->type = ENEMY;
-    map[4].npcs[0]->health = 75;
-    map[4].npcs[0]->x = 0;
-    map[4].npcs[0]->y = 0;
-    map[4].npcs[0]->reward = malloc(sizeof(Item));
-    map[4].npcs[0]->reward->name = "Dragon horn";
-    map[4].npcs[0]->reward->description = "The spirit dropped a Dragon horn after being defeated.";
+    addNpc(&map[4], "Shiny hostile spirit", ENEMY, 75, 0, 0, dragonReward);
+    addNpc(&map[4], "Hostile spirit", ENEMY, 50, 2, 0, NULL);
 
-    map[4].npcs[1] = malloc(sizeof(NPC));
-    map[4].npcs[1]->name = "Hostile spirit";
-    map[4].npcs[1]->type = ENEMY;
-    map[4].npcs[1]->health = 50;
-    map[4].npcs[1]->x = 2;
-    map[4].npcs[1]->y = 0;
-    map[4].npcs[1]->reward = NULL;
+    addDoor(&map[4], NORTH, 0, 2, 3, 0, 1);
 
 // room 6 1x1 - boss room
     map[5].name = "Inner Sanctum";
@@ -175,8 +164,8 @@ Room *initializeMap(void) {
         map[5].grid[i] = malloc(sizeof(char) * (map[5].width + 1));
     }
     map[5].grid[0][0] = ' ';
-    map[5].itemCount = 0;
-    map[5].npcCount = 0;
+
+    addDoor(&map[5], WEST, 0, 0, 0, 2, 1);
 
     return map;
 }

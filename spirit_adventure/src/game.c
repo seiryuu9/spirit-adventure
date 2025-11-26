@@ -29,7 +29,6 @@ int movePlayerToRoom(Player *player, Room *map, Direction dir) {
 
     }
 
-
     return 0; // Return 0 on success
 }
 
