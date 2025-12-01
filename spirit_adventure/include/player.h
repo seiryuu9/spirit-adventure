@@ -16,8 +16,11 @@ typedef struct {
 } Player;
 
 // functions for the player
-Player *createPlayer(const char *name);
+Player *createPlayer(char *name);
 void freePlayer(Player *player);
 void addItemToInventory(Player *player, Item *item);
+int playerHasItem(Player *player, const char *itemName);
+int removeItemFromInventory(Player *player, const char *itemName);
+
 
 #endif // SPIRIT_ADVENTURE_PLAYER_H

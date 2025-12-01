@@ -18,14 +18,14 @@ typedef enum {
 } Direction;
 
 typedef struct {
-    char *name;
+    const char *name;
     char *description;
     int x, y;
 } Item;
 
 // NPC
 typedef struct {
-    char *name;
+    const char *name;
     NPCType type;
     int health;         // for enemies
     Item *reward;       // drops after defeating them
@@ -40,7 +40,7 @@ typedef struct {
 } Door;
 
 typedef struct {
-    char *name;
+    const char *name;
     char *description;
     int width;
     int height;
