@@ -20,7 +20,7 @@ Player *createPlayer(char *name);
 void freePlayer(Player *player);
 void addItemToInventory(Player *player, Item *item);
 int playerHasItem(Player *player, const char *itemName);
-int removeItemFromInventory(Player *player, const char *itemName);
+void removeItemFromInventory(Player *player, const char *itemName);
 
 
 #endif // SPIRIT_ADVENTURE_PLAYER_H

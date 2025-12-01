@@ -1,5 +1,8 @@
 #ifndef SPIRIT_ADVENTURE_GAME_H
 #define SPIRIT_ADVENTURE_GAME_H
+extern int maskCount;
+extern int dragonHornCount;
+extern int enemiesDefeated;
 
 #include "map.h"
 #include "player.h"
@@ -11,20 +14,20 @@ typedef enum {
 } InteractionType;
 
 // movement inside a room - only needs one room
-int movePlayerInRoom(Player *player, Room *room, Direction dir);
-// movement between rooms through doors - needs the map of the rooms
-int movePlayerToRoom(Player *player, Room *map, Direction dir);
+void movePlayerInRoom(Player *player, Room *map, Direction dir);
+// movement between rooms through doors
+void movePlayerToRoom(Player *player, Room *map);
 
 // info about current room
 void lookAround(Room *room);
 void showInventory(Player *player);
-void useItem(Player *player, char *item);
+void useItem(Player *player, char *itemName);
 void showCommands(void);
 
 // interactions
-void pickUpItem(Player *player, Room *room, Item *item);
+void pickUpItem(Player *player, Room *map, Item *item);
 void interactWithNPC(Player *player, NPC *npc, Room *room, InteractionType action);
-void fight(Player *player, NPC *npc, Room *room);
+void fight(Player *player, NPC *npc, Room *map);
 
 // main game loop and command processing
 void startGame(Player *player, Room *map);

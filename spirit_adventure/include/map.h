@@ -7,6 +7,7 @@
 #define MAX_NPCS 2
 #define ROOM_COUNT 6
 #define MAX_DOORS 4
+#define FINAL_ROOM_INDEX 5
 
 typedef enum { FRIENDLY, ENEMY, NEUTRAL } NPCType;
 
@@ -23,7 +24,7 @@ typedef struct {
     int x, y;
 } Item;
 
-// NPC
+
 typedef struct {
     const char *name;
     NPCType type;
@@ -56,5 +57,12 @@ typedef struct {
 
 Room *initializeMap(void);
 void freeMap(Room *map);
+void removeItemFromRoom(Room *room, Item *item);
+void removeNPCFromRoom(Room *room, NPC *npc);
+void addItem(Room *room, const char *name, int x, int y);
+void addNpc(Room *room, const char *name, NPCType type, int health, int x, int y, Item *reward);
+void addDoor(Room *room, Direction dir, int leadsTo, int x, int y, int exitX, int exitY); // being in header makes then accessible to other files
+Item *getItemAt(Room *room, int x, int y);
+NPC *getNPCAt(Room *room, int x, int y);
 
 #endif // SPIRIT_ADVENTURE_MAP_H

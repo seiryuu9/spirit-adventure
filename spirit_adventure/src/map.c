@@ -6,7 +6,7 @@ void addItem(Room *room, const char *name, int x, int y) {
         return;
     }
     Item *item = malloc(sizeof(Item));
-    item->name = name;
+    item->name = name; //does malloc and copies the name
     item->x = x;
     item->y = y;
     room->items[room->itemCount] = item;
@@ -126,10 +126,10 @@ Room *initializeMap(void) {
 
     addItem(&map[3], "Dragon horn", 1, 2);
 
-    Item *dragonReward = malloc(sizeof(Item));
-    dragonReward->name = "Dragon horn";
-    dragonReward->description = "The spirit dropped a Dragon horn after being defeated.";
-    addNpc(&map[3], "Shiny hostile spirit", ENEMY, 75, 2, 1, dragonReward);
+    Item *dragonReward1 = malloc(sizeof(Item));
+    dragonReward1->name = "Dragon horn";
+    dragonReward1->description = "The spirit dropped a Dragon horn after being defeated.";
+    addNpc(&map[3], "Shiny hostile spirit", ENEMY, 75, 2, 1, dragonReward1);
 
     addDoor(&map[3], EAST, 0, 3, 1, 0, 1);
 
@@ -149,23 +149,21 @@ Room *initializeMap(void) {
 
     addItem(&map[4], "Fox mask part", 3, 2);
 
-    addNpc(&map[4], "Shiny hostile spirit", ENEMY, 75, 0, 0, dragonReward);
+    Item *dragonReward2 = malloc(sizeof(Item));
+    dragonReward2->name = "Dragon horn";
+    dragonReward2->description = "The spirit dropped a Dragon horn after being defeated.";
+
+    addNpc(&map[4], "Shiny hostile spirit", ENEMY, 75, 0, 0, dragonReward2);
     addNpc(&map[4], "Hostile spirit", ENEMY, 50, 2, 0, NULL);
 
     addDoor(&map[4], NORTH, 0, 2, 3, 0, 1);
 
 // room 6 1x1 - boss room
-    map[5].name = "Inner Sanctum";
-    map[5].description = "You step into the inner sanctum of the shrine, you see an enormous cherry blossom tree in the middle of an otherwise empty room.";
-    map[5].width = 1;
-    map[5].height = 1;
-    map[5].grid = malloc(sizeof(char *) * map[5].height);
-    for (int i = 0; i < map[5].height; i++) {
-        map[5].grid[i] = malloc(sizeof(char) * (map[5].width + 1));
-    }
-    map[5].grid[0][0] = ' ';
-
-    addDoor(&map[5], WEST, 0, 0, 0, 2, 1);
+    map[5].name = "";
+    map[5].description = "";
+    map[5].width = 0;
+    map[5].height = 0;
+    map[5].grid = 0;
 
     return map;
 }
@@ -176,7 +174,7 @@ void freeMap(Room *map) {
     for (int r = 0; r < ROOM_COUNT; r++) {
         Room *room = &map[r]; // pointer to current room
 
-        // frees items
+        // frees only items that weren't picked up
         for (int i = 0; i < room->itemCount; i++) {
             if (room->items[i]) { // easier way of accessing the item pointer (*room).items[i]
                 free(room->items[i]);
@@ -203,3 +201,55 @@ void freeMap(Room *map) {
     }
     free(map);
 }
+
+void removeItemFromRoom(Room *room, Item *item) {
+    for (int i = 0; i < room->itemCount; i++) {
+        if (room->items[i] == item) {
+
+            // moves the items back in array
+            for (int j = i; j < room->itemCount - 1; j++) {
+                room->items[j] = room->items[j + 1];
+            }
+
+            room->itemCount--;
+            room->items[room->itemCount] = NULL; // clears possibly dangling pointer after freeing
+            return;
+        }
+    }
+}
+
+void removeNPCFromRoom(Room *room, NPC *npc) {
+    for (int i = 0; i < room->npcCount; i++) {
+        if (room->npcs[i] == npc) {
+
+            for (int j = i; j < room->npcCount - 1; j++) {
+                room->npcs[j] = room->npcs[j + 1];
+            }
+
+            room->npcCount--;
+            room->npcs[room->npcCount] = NULL;
+            return;
+        }
+    }
+}
+
+Item* getItemAt(Room *room, int x, int y) {
+    for (int i = 0; i < room->itemCount; i++) {
+        Item *item = room->items[i];
+        if (item->x == x && item->y == y) {
+            return item;
+        }
+    }
+    return NULL; // no item
+}
+
+NPC* getNPCAt(Room *room, int x, int y) {
+    for (int i = 0; i < room->npcCount; i++) {
+        NPC *npc = room->npcs[i];
+        if (npc->x == x && npc->y == y) {
+            return npc;
+        }
+    }
+    return NULL;
+}
+

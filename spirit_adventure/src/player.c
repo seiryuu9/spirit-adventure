@@ -9,7 +9,7 @@ Player *createPlayer(char *name) {
         fprintf(stderr, "Failed to allocate memory for player\n");
         exit(EXIT_FAILURE);
     }
-    player->name = strdup(name); // duplicates the name - safer (lost pointer or change name changes the copy)
+    player->name = name;
     player->currentRoom = 0;
     player->inventoryCount = 0;
     player->health = PLAYER_MAX_HEALTH;
@@ -19,10 +19,13 @@ Player *createPlayer(char *name) {
 }
 
 void freePlayer(Player *player) {
-    if (player) {
-        free(player->name);
-        free(player);
+    for (int i = 0; i < player->inventoryCount; i++) {
+        if (player->inventory[i]) {
+            free(player->inventory[i]);  // frees items in inventory
+        }
     }
+
+    free(player);
 }
 
 void addItemToInventory(Player *player, Item *item) {
@@ -45,7 +48,7 @@ int playerHasItem(Player *player, const char *itemName) {
     return 0;
 }
 
-int removeItemFromInventory(Player *player, const char *itemName) {
+void removeItemFromInventory(Player *player, const char *itemName) {
     for (int i = 0; i < player->inventoryCount; i++) {
         if (strcmp(player->inventory[i]->name, itemName) == 0) {
             // moves the items back in array
@@ -54,11 +57,12 @@ int removeItemFromInventory(Player *player, const char *itemName) {
             }
 
             player->inventoryCount--;
+            player->inventory[player->inventoryCount] = NULL;
 
-            return 1; // success
+            return;
         }
     }
-    return 0; // item not found
 }
+
 
 
