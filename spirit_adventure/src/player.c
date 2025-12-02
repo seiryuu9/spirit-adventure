@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../include/player.h"
+#include "../include/text.h"
+#define printf(...) tprintf(__VA_ARGS__)
+
 
 Player *createPlayer(char *name) {
     Player *player = malloc(sizeof(Player));

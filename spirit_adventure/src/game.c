@@ -5,6 +5,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "../include/save.h"
+#include "../include/text.h"
+#define printf(...) tprintf(__VA_ARGS__)
+
 int dragonHornCount = 0;
 int enemiesDefeated = 0;
 int maskCount = 0;
@@ -57,71 +61,74 @@ void movePlayerInRoom(Player *player, Room *map, Direction dir) {
         return;
     }
 
-    char choice;
-    char choiceLong[6];
-
     player->x = newX;
     player->y = newY;
 
     if (room->grid[newY][newX] == ' ') {
         printf("You moved to (%d, %d).\n", player->x, player->y);
+
     } else if (room->grid[newY][newX] == 'D') {
         printf("You are at a door at (%d, %d).\n", player->x, player->y);
         printf("Do you want to enter? (Y/N)\n");
-        scanf(" %c", &choice);
-        if (choice == 'Y' || choice == 'y') {
-            movePlayerToRoom(player, room);
-        } else if (choice == 'N' || choice == 'n') {
-            printf("You decided not to enter the door and step back to (%d, %d).\n", oldX, oldY);
-            player->x = oldX;
-            player->y = oldY;
+        char input[4];
+        fgets(input, sizeof(input), stdin);
+        input[strcspn(input, "\n")] = 0;  // deletes \n
+        if (strcmp(input, "Y") == 0 || strcmp(input, "y") == 0) {
+            movePlayerToRoom(player, map);
+        } else if (strcmp(input, "N") == 0 || strcmp(input, "n") == 0) {
+            printf("You decided not to enter the door.\n");
         }
 
     } else if (room->grid[newY][newX] == 'N') {
         NPC *npc = getNPCAt(room, player->x, player->y);
 
-        printf("You see an NPC at (%d, %d).\n", player->x, player->y);
+        printf("You see someone at (%d, %d).\n", player->x, player->y);
         printf("Do you want to interact? (Y/N)\n");
-        scanf(" %c", &choice);
-        if (choice == 'N' || choice == 'n') {
-            printf("You decided not to interact with the NPC.\n");
+        char input[4];
+        fgets(input, sizeof(input), stdin);
+        input[strcspn(input, "\n")] = 0;
+        if (strcmp(input, "N") == 0 || strcmp(input, "n") == 0) {
+            printf("You decided not to interact with them.\n");
             printf("You move back to (%d, %d).\n", oldX, oldY);
             player->x = oldX;
             player->y = oldY;
-        } else if (choice == 'Y' || choice == 'y') {
+        } else if (strcmp(input, "Y") == 0 || strcmp(input, "y") == 0) {
             printf("Do you wish to TALK or FIGHT?\n");
-            scanf("%5s", choiceLong); //reads only 5 chars to avoid overflow
+
+            char choiceLong[16];
+            fgets(choiceLong, sizeof(choiceLong), stdin);
+            choiceLong[strcspn(choiceLong, "\n")] = 0;
+
             for (int i = 0; choiceLong[i]; i++) {
                 choiceLong[i] = tolower(choiceLong[i]);
             }
             if (strcmp(choiceLong, "talk") == 0) {
-                interactWithNPC(player, npc, room, INTERACT_TALK);
+                interactWithNPC(player, npc, map, INTERACT_TALK);
             } else if (strcmp(choiceLong, "fight") == 0) {
-                interactWithNPC(player, npc, room, INTERACT_FIGHT);
+                interactWithNPC(player, npc, map, INTERACT_FIGHT);
             }
         }
 
     } else if (room->grid[newY][newX] == 'I') {
         printf("You see an item on the floor at (%d, %d).\n", player->x, player->y);
         printf("Do you want to pick it up? (Y/N)\n");
-        scanf(" %c", &choice);
-        if (choice == 'N' || choice == 'n') {
+        char input[4];
+        fgets(input, sizeof(input), stdin);
+        input[strcspn(input, "\n")] = 0;
+        if (strcmp(input, "N") == 0 || strcmp(input, "n") == 0) {
             printf("You decided not to pick up the item.\n");
-            printf("You move back to (%d, %d).\n", oldX, oldY);
-            player->x = oldX;
-            player->y = oldY;
-        } else if (choice == 'Y' || choice == 'y') {
+        } else if (strcmp(input, "Y") == 0 || strcmp(input, "y") == 0) {
             printf("You picked up the item.\n");
             Item *item = getItemAt(room, player->x, player->y);
             if (item) {
-                pickUpItem(player, room, item);
+                pickUpItem(player, map, item);
             }
         }
     }
 
 }
 
-void movePlayerToRoom(Player *player, Room *map) {
+int movePlayerToRoom(Player *player, Room *map) {
     Room *currentRoom = &map[player->currentRoom];
 
     if (currentRoom->grid[player->y][player->x] == 'D') {
@@ -131,36 +138,37 @@ void movePlayerToRoom(Player *player, Room *map) {
                 player->currentRoom = door->leadsTo;
                 player->x = door->exitX;
                 player->y = door->exitY;
-                printf("%s", currentRoom->description);
+                printf("%s", map[player->currentRoom].description);
+                printf(" You are standing at (%d, %d) in the %s.\n", player->x, player->y, map[player->currentRoom].name);
 
                 if (player->currentRoom == FINAL_ROOM_INDEX) {
                     enterFinalRoom(player);
                 }
-                return;
+                return 1;
             }
         }
-    }
+    } return 0;
 }
 
 void lookAround(Room *room) {
 
-    printf("You look around the %s.\n", room->name);
+    printf("You look around the %s, size of %dx%d.\n", room->name, room->width, room->height);
     if (room->npcCount > 0) {
-        printf("You see some beings:\n ");
+        printf("\nYou see some beings:\n");
         for (int i = 0; i < room->npcCount; i++) {
             NPC *npc = room->npcs[i];
             printf("%s at (%d, %d)\n", npc->name, npc->x, npc->y);
         }
     }
     if (room->itemCount > 0) {
-        printf("You notice some items on the floor:\n ");
+        printf("\nYou notice some items on the floor:\n");
         for (int i = 0; i < room->itemCount; i++) {
             Item *item = room->items[i];
             printf("%s at (%d, %d)\n", item->name, item->x, item->y);
         }
     }
     if (room->doorCount > 0) {
-        printf("There's doors leading somewhere:\n ");
+        printf("\nThere's doors leading somewhere:\n");
         for (int i = 0; i < room->doorCount; i++) {
             Door *door = &room->doors[i];
             printf("Door at (%d, %d)\n", door->x, door->y);
@@ -184,7 +192,10 @@ void spawnGoldenCoinIfNeeded(Player *player, Room *map) {
         return;
     }
 
-    getNPCAt(firstRoom, 2, 1)->type = ENEMY;
+    NPC *npc = getNPCAt(firstRoom, 2, 1);
+    if (npc) {
+        npc->type = ENEMY;
+    }
 
     if (rand() % 2 != 0) {
         return; // 50% chance nothing happens
@@ -197,7 +208,7 @@ void spawnGoldenCoinIfNeeded(Player *player, Room *map) {
         }
     }
 
-    addItem(firstRoom, "Golden coin", 1, 1);
+    addItem(firstRoom, "Golden Coin", 1, 1);
     firstRoom->grid[1][1] = 'I';
 
     printf("\nYou hear the rustle of leaves. Something important appeared somewhere. Maybe worth checking the place where your journey began?\n");
@@ -212,8 +223,10 @@ void checkDragon(Player *player, Room *map) {
     }
 
     if (dragonHornCount >= 4 && enemiesDefeated >= 4) {
-        getNPCAt(&map[0], 2, 1)->type = ENEMY;
-
+        NPC* n = getNPCAt(&map[0], 2, 1);
+        if (n != NULL) {
+            n->type = ENEMY;
+        }
     }
 }
 
@@ -239,25 +252,28 @@ void interactWithNPC(Player *player, NPC *npc, Room *map, InteractionType action
             if (action == INTERACT_TALK) {
                 printf("You come up to the monk and bow respectfully. He nods in return and says, \"Peace be with you, traveler.\"\n");
                 printf("The monk offers you a healing potion as a token of goodwill. Do you take it? (Y/N)\n");
-                char choice;
-                scanf(" %c", &choice);
-                if (choice == 'Y' || choice == 'y') {
+                char input[4];
+                fgets(input, sizeof(input), stdin);
+                input[strcspn(input, "\n")] = 0;
+                if (strcmp(input, "Y") == 0 || strcmp(input, "y") == 0) {
                     Item *potion = malloc(sizeof(Item));
                     potion->name = "Healing Potion";
                     addItemToInventory(player, potion);
                     printf("You received a Healing Potion!\n");
                     printf("You bow and turn to leave, but the monk suddenly grabs your arm. \"And remember. Use it before your biggest foe, otherwise there's no guarantee what fate will befall you.\"\n");
-                } else {
+                } else if (strcmp(input, "N") == 0 || strcmp(input, "n") == 0){
                     printf("You decline the monk's offer. He just shrugs.\n");
                 }
                 printf("Before you leave, the monk offers to tell you more about this place. Would you like to hear it? (Y/N)\n");
-                scanf(" %c", &choice);
-                if (choice == 'Y' || choice == 'y') {
+                //char input[4];
+                fgets(input, sizeof(input), stdin);
+                input[strcspn(input, "\n")] = 0;
+                if (strcmp(input, "Y") == 0 || strcmp(input, "y") == 0) {
                     printf("\"You have fallen into this place because your soul seeks something. Only by overcoming the challenges here can you find what you truly desire.\n");
                     printf("Will you be ruthless but strong and level-headed, or face the weakness within you and offer mercy to those you meet? The choice is yours, but remember, every action has its consequences.\"\n");
                     printf("You feel something tug at your soul. You distantly hear the flapping of wings and feel something fluffy brush your legs. When you look down, nothing's there.");
                     printf("\"But be careful. Should you try to please everyone, you may end up pleasing no one - not even yourself.\"\n");
-                } else {
+                } else if (strcmp(input, "N") == 0 || strcmp(input, "n") == 0){
                     printf("The monk doesn't say anything else and let's you leave.\n");
                 }
             } else if (action == INTERACT_FIGHT) {
@@ -284,16 +300,17 @@ void interactWithNPC(Player *player, NPC *npc, Room *map, InteractionType action
                printf("\"What is it that you seek, mortal? You seem hesitant to fight me, yet you know I am an obstacle in your path.\"\n");
                 if (playerHasItem(player, "Golden Coin")) {
                     printf("You suddenly remember the golden coin you found earlier. Would you like to offer it? (Y/N).\n");
-                    char choice;
-                    scanf(" %c", &choice);
-                    if (choice == 'Y' || choice == 'y') {
+                    char input[4];
+                    fgets(input, sizeof(input), stdin);
+                    input[strcspn(input, "\n")] = 0;
+                    if (strcmp(input, "Y") == 0 || strcmp(input, "y") == 0) {
                         printf("You offer the golden coin to the spirit. It takes the coin and without another word, it vanishes into thin air.\n");
                         printf("\"Thank you, kind stranger.\" You hear faintly as it departs.\n");
                         removeItemFromInventory(player, "Golden Coin");
                         room->grid[player->y][player->x] = 'D'; // enables door
                         printf("Without further hesitation, you step through the door.\n");
                         movePlayerToRoom(player, room);
-                    } else {
+                    } else if (strcmp(input, "N") == 0 || strcmp(input, "n") == 0) {
                         printf("You decide not to offer the coin. The spirit looks disappointed.\n");
                     }
                 } else {
@@ -346,7 +363,7 @@ void useItem(Player *player, char *itemName) {
 }
 
 void showCommands(void) {
-    printf("Available commands:\n");
+    printf("\nAvailable commands:\n");
     printf("- north, south, east, west: Move in the specified direction.\n");
     printf("- look around, info: Get information about the current room.\n");
     printf("- inventory: Show your current inventory and health.\n");
@@ -385,7 +402,8 @@ void fight(Player *player, NPC *npc, Room *map) {
         int playerDmg = randomInRange(25, 50);
         npc->health -= playerDmg;
 
-        printf("You strike %s for %d damage! (Enemy HP: %d)\n", npc->name, playerDmg, npc->health);
+        int negHealth = npc->health < 0 ? 0 : npc->health;
+        printf("You strike %s for %d damage! (Enemy HP: %d)\n", npc->name, playerDmg, negHealth);
 
         if (npc->health <= 0) {
             printf("\nYou defeated %s!\n", npc->name);
@@ -393,10 +411,11 @@ void fight(Player *player, NPC *npc, Room *map) {
             if (npc->reward) {
                 printf("He dropped %s!\n", npc->reward->name);
                 addItemToInventory(player, npc->reward);
-                npc->reward = NULL; // the npc doesnt own it so it does get double freed
+                npc->reward = NULL; // the npc doesn't own it so it doesn't get double freed
             }
             map->grid[npc->y][npc->x] = ' ';
-            removeNPCFromRoom(map, npc);
+            Room *room = &map[player->currentRoom];
+            removeNPCFromRoom(room, npc);
             checkDragon(player, map);
             return;
         }
@@ -406,8 +425,8 @@ void fight(Player *player, NPC *npc, Room *map) {
         int enemyDmg = randomInRange(enemyMinDmg, enemyMaxDmg);
         player->health -= enemyDmg;
 
-        printf("%s hits you for %d damage! (Your HP: %d)\n",
-               npc->name, enemyDmg, player->health);
+        int myHealth = player->health < 0 ? 0 : player->health;
+        printf("%s hits you for %d damage! (Your HP: %d)\n", npc->name, enemyDmg, myHealth);
 
         if (player->health <= 0) {
             printf("\nYou have fallen in battle.\n");
@@ -424,7 +443,7 @@ void startGame(Player *player, Room *map) {
     printf("%s\n", currentRoom->description);
     lookAround(currentRoom);
     showCommands();
-
+    printf("You're standing at (%d, %d).\n", player->x, player->y);
 
     while (1) { // main game loop
         printf("\nEnter command: ");
@@ -474,7 +493,7 @@ void processCommand(Player *player, Room *map, const char *input) {
         useItem(player, cmd + 4); // skips "use "
     }
     // look around
-    else if ((strcmp(cmd, "info") == 0) || strcmp(cmd, "look around") == 0 ){
+    else if (strcmp(cmd, "info") == 0 || strcmp(cmd, "look around") == 0 ){
         lookAround(&map[player->currentRoom]);
     }
     // help /commands
@@ -484,6 +503,10 @@ void processCommand(Player *player, Room *map, const char *input) {
     // quits game
     else if (strcmp(cmd, "quit") == 0) {
         printf("Thanks for playing!\n");
+        char saveFile[128];
+        snprintf(saveFile, sizeof(saveFile), "%s.dat", player->name);
+
+        saveGame(saveFile, player, map);
         exit(0);
     }
     else {

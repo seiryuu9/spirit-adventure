@@ -48,6 +48,17 @@ Room *initializeMap(void) {
     Room *map = malloc(sizeof(Room) * ROOM_COUNT); // array of 6 rooms of type Room in heap
     if (!map) {return NULL;}
 
+    // initialize all rooms
+    for (int i = 0; i < ROOM_COUNT; i++) {
+        map[i].npcCount = 0;
+        map[i].itemCount = 0;
+        map[i].doorCount = 0;
+
+        // pointers
+        for (int n = 0; n < MAX_NPCS; n++) map[i].npcs[n] = NULL;
+        for (int it = 0; it < MAX_ITEMS; it++) map[i].items[it] = NULL;
+    }
+
 // room 1 3x3
     map[0].name = "Middle of Nowhere";
     map[0].description = "You find yourself in the middle of a room that looks like it's supposed to resemble the inside of a shrine. Everything looks abandoned.";

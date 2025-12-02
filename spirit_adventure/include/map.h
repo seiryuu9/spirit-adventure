@@ -24,7 +24,6 @@ typedef struct {
     int x, y;
 } Item;
 
-
 typedef struct {
     const char *name;
     NPCType type;

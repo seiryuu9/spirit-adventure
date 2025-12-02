@@ -9,12 +9,13 @@ add_library(game src/game.c)
 add_library(map src/map.c)
 add_library(player src/player.c)
 add_library(save src/save.c)
+add_library(text src/text.c)
 
 # main program
-add_executable(spirit_adventure main.c)
+add_executable(adv main.c)
 
 # connects the main program with the libraries defined above
-target_link_libraries(spirit_adventure game map player save)
+target_link_libraries(adv game map player save text)
 
 # header source files in include/ folder
-target_include_directories(spirit_adventure PRIVATE include)
+target_include_directories(adv PRIVATE include)

@@ -16,7 +16,7 @@ typedef enum {
 // movement inside a room - only needs one room
 void movePlayerInRoom(Player *player, Room *map, Direction dir);
 // movement between rooms through doors
-void movePlayerToRoom(Player *player, Room *map);
+int movePlayerToRoom(Player *player, Room *map);
 
 // info about current room
 void lookAround(Room *room);

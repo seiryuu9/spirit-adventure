@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "../include/text.h"
+#define printf(...) tprintf(__VA_ARGS__)
+
 // writes a string to file
 static void writeString(FILE *f, const char *str) {
     size_t len = strlen(str);
@@ -41,17 +44,8 @@ int saveGame(const char *filename, Player *player, Room *map) {
     }
 
     // rooms
-    int roomCount = ROOM_COUNT;
-    fwrite(&roomCount, sizeof(int), 1, f);
-    for (int r = 0; r < 6; r++) {
+    for (int r = 0; r < ROOM_COUNT; r++) {
         Room *room = &map[r];
-        fwrite(&room->width, sizeof(int), 1, f);
-        fwrite(&room->height, sizeof(int), 1, f);
-
-        // grid
-        for (int y = 0; y < room->height; y++) {
-            fwrite(room->grid[y], sizeof(char), room->width, f);
-        }
 
         // npcs
         fwrite(&room->npcCount, sizeof(int), 1, f);
@@ -64,7 +58,7 @@ int saveGame(const char *filename, Player *player, Room *map) {
             fwrite(&npc->health, sizeof(int), 1, f);
         }
 
-        // items on the ground
+        // items
         fwrite(&room->itemCount, sizeof(int), 1, f);
         for (int i = 0; i < room->itemCount; i++) {
             Item *item = room->items[i];
@@ -83,7 +77,7 @@ int saveGame(const char *filename, Player *player, Room *map) {
 int loadGame(const char *filename, Player *player, Room *map) {
     FILE *f = fopen(filename, "rb");
     if (!f) {
-        perror("Failed to open file");
+        perror("Failed to open save file");
         return 0;
     }
 
@@ -92,6 +86,7 @@ int loadGame(const char *filename, Player *player, Room *map) {
     // player
     readString(f, buffer, sizeof(buffer));
     player->name = strdup(buffer);  // allocate name dynamically
+
     fread(&player->health, sizeof(int), 1, f);
     fread(&player->x, sizeof(int), 1, f);
     fread(&player->y, sizeof(int), 1, f);
@@ -111,16 +106,28 @@ int loadGame(const char *filename, Player *player, Room *map) {
         // npcs
         fread(&room->npcCount, sizeof(int), 1, f);
         for (int n = 0; n < room->npcCount; n++) {
+
             NPC *npc = room->npcs[n];
+
+            readString(f, buffer, sizeof(buffer));
+            npc->name = strdup(buffer);
+
+            fread(&npc->type, sizeof(int), 1, f);
             fread(&npc->x, sizeof(int), 1, f);
             fread(&npc->y, sizeof(int), 1, f);
             fread(&npc->health, sizeof(int), 1, f);
         }
 
+
         // items
         fread(&room->itemCount, sizeof(int), 1, f);
         for (int i = 0; i < room->itemCount; i++) {
+
             Item *item = room->items[i];
+
+            readString(f, buffer, sizeof(buffer));
+            item->name = strdup(buffer);
+
             fread(&item->x, sizeof(int), 1, f);
             fread(&item->y, sizeof(int), 1, f);
         }
