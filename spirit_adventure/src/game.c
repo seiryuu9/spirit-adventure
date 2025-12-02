@@ -5,6 +5,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+int dragonHornCount = 0;
+int enemiesDefeated = 0;
+int maskCount = 0;
+
 int randomInRange(int min, int max) {
     return min + rand() % (max - min + 1);
 } // for random dmg
