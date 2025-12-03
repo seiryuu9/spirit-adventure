@@ -72,8 +72,8 @@ Room *initializeMap(void) {
     map[0].grid[1][0] = 'D'; map[0].grid[1][1] = ' '; map[0].grid[1][2] = 'N';
     map[0].grid[0][0] = ' '; map[0].grid[0][1] = 'D'; map[0].grid[0][2] = ' ';
 
-    addNpc(&map[0], "Mysterious Monk", FRIENDLY, -1, 2, 2, NULL);
-    addNpc(&map[0], "Wandering Spirit", NEUTRAL, -1, 2, 1, NULL);
+    addNpc(&map[0], "Mysterious monk", FRIENDLY, -1, 2, 2, NULL);
+    addNpc(&map[0], "Wandering spirit", NEUTRAL, -1, 2, 1, NULL);
 
     addDoor(&map[0], NORTH, 1, 1, 2, 2, 0);
     addDoor(&map[0], WEST, 3, 0, 1, 3, 1);

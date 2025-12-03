@@ -3,9 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../include/text.h"
-#define printf(...) tprintf(__VA_ARGS__)
-
 // writes a string to file
 static void writeString(FILE *f, const char *str) {
     size_t len = strlen(str);

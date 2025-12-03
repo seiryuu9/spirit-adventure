@@ -7,7 +7,6 @@
 
 #include "../include/save.h"
 #include "../include/text.h"
-#define printf(...) tprintf(__VA_ARGS__)
 
 int dragonHornCount = 0;
 int enemiesDefeated = 0;
@@ -18,25 +17,25 @@ int randomInRange(int min, int max) {
 } // for random dmg
 
 void enterFinalRoom(Player *player) {
-    printf("\nYou step into the inner sanctum. A majestic cherry blossom tree stands in the middle. A stone path leads to it, dimly lit by several torches and buzzing fireflies.\n");
-    printf("As you approach the tree, you notice something in front of the tree. Or someone? Suddenly, you can't move and the next thing you know, a deep voice echoes in your mind.\n");
-    printf("The voice, you assume, belongs to the spirit of the tree.\n");
-    printf("\"I see you have finally reached the end of your journey, mortal. But tell me, what is it that you truly seek? Have you done what you truly believe in? Were you brave? Or were you foolish?\"\n");
-    printf("You feel a chill run down your spine, but you take a step forward, kneel before the spirit and wait for your judgement.\n");
+    tprintf("\nYou step into the inner sanctum. A majestic cherry blossom tree stands in the middle. A stone path leads to it, dimly lit by several torches and buzzing fireflies.\n");
+    tprintf("As you approach the tree, you notice something in front of the tree. Or someone? Suddenly, you can't move and the next thing you know, a deep voice echoes in your mind.\n");
+    tprintf("The voice, you assume, belongs to the spirit of the tree.\n");
+    tprintf("\"I see you have finally reached the end of your journey, mortal. But tell me, what is it that you truly seek? Have you done what you truly believe in? Were you brave? Or were you foolish?\"\n");
+    tprintf("You feel a chill run down your spine, but you take a step forward, kneel before the spirit and wait for your judgement.\n");
     if (maskCount == 4 && enemiesDefeated == 0) {
-        printf("A gentle voice responds. \"So, you chose the path of mercy and compassion, did you? You were very brave and chose the harder way - even if it doesn't always seem that way. Very well, mortal.\"\n");
-        printf("\"Remember, true strength lies not in power, but in kindness and understanding. Use this gift wisely, for it can heal even the deepest wounds but it can also be sly.\"\n");
-        printf("The tree spirit flies into your chest. You feel a warm light enveloping you. You have obtained the Fox soul!\n");
-        printf("Farewell, %s...", player->name);
+        tprintf("A gentle voice responds. \"So, you chose the path of mercy and compassion, did you? You were very brave and chose the harder way - even if it doesn't always seem that way. Very well, mortal.\"\n");
+        tprintf("\"Remember, true strength lies not in power, but in kindness and understanding. Use this gift wisely, for it can heal even the deepest wounds but it can also be sly.\"\n");
+        tprintf("The tree spirit flies into your chest. You feel a warm light enveloping you. You have obtained the Fox soul!\n");
+        tprintf("Farewell, %s...", player->name);
     } else if (dragonHornCount == 4 && enemiesDefeated == 5) {
-        printf("A different voice chuckles darkly. \"So, you chose the path of strength and ruthlessness, did you? Very well, mortal.\"\n");
-        printf("\"Be careful, don't let the power consume you. The dragon spirit is not to be trifled with. Use its power wisely, for it can bring both great strength and great destruction.\"\n");
-        printf("The tree spirit flies into your chest. You feel a surge of power coursing through your veins. You have obtained the Dragon soul!\n");
-        printf("Farewell, %s...", player->name);
+        tprintf("A different voice chuckles darkly. \"So, you chose the path of strength and ruthlessness, did you? Very well, mortal.\"\n");
+        tprintf("\"Be careful, don't let the power consume you. The dragon spirit is not to be trifled with. Use its power wisely, for it can bring both great strength and great destruction.\"\n");
+        tprintf("The tree spirit flies into your chest. You feel a surge of power coursing through your veins. You have obtained the Dragon soul!\n");
+        tprintf("Farewell, %s...", player->name);
     } else {
-        printf("The spirit sighs deeply. \"You have tried but I can feel your heart still sways, mortal. You have not proven yourself worthy of the gift you seek.\"\n");
-        printf("A strong shudder passes through your body. \"I can sense the potential within you, but without true conviction, it is wasted. Return when you have found your true path.\"\n");
-        printf("You were banished.");
+        tprintf("The spirit sighs deeply. \"You have tried but I can feel your heart still sways, mortal. You have not proven yourself worthy of the gift you seek.\"\n");
+        tprintf("A strong shudder passes through your body. \"I can sense the potential within you, but without true conviction, it is wasted. Return when you have found your true path.\"\n");
+        tprintf("You were banished.");
     }
     exit(0);
 }
@@ -70,21 +69,26 @@ void movePlayerInRoom(Player *player, Room *map, Direction dir) {
     } else if (room->grid[newY][newX] == 'D') {
         printf("You are at a door at (%d, %d).\n", player->x, player->y);
         printf("Do you want to enter? (Y/N)\n");
-        char input[4];
+        char input[6];
         fgets(input, sizeof(input), stdin);
         input[strcspn(input, "\n")] = 0;  // deletes \n
         if (strcmp(input, "Y") == 0 || strcmp(input, "y") == 0) {
             movePlayerToRoom(player, map);
         } else if (strcmp(input, "N") == 0 || strcmp(input, "n") == 0) {
             printf("You decided not to enter the door.\n");
+        } else {
+            printf("Invalid input. You move back to (%d, %d).\n", oldX, oldY);
+            player->x = oldX;
+            player->y = oldY;
         }
+
 
     } else if (room->grid[newY][newX] == 'N') {
         NPC *npc = getNPCAt(room, player->x, player->y);
 
         printf("You see someone at (%d, %d).\n", player->x, player->y);
         printf("Do you want to interact? (Y/N)\n");
-        char input[4];
+        char input[6];
         fgets(input, sizeof(input), stdin);
         input[strcspn(input, "\n")] = 0;
         if (strcmp(input, "N") == 0 || strcmp(input, "n") == 0) {
@@ -107,6 +111,10 @@ void movePlayerInRoom(Player *player, Room *map, Direction dir) {
             } else if (strcmp(choiceLong, "fight") == 0) {
                 interactWithNPC(player, npc, map, INTERACT_FIGHT);
             }
+        } else {
+            printf("Invalid input. You move back to (%d, %d).\n", oldX, oldY);
+            player->x = oldX;
+            player->y = oldY;
         }
 
     } else if (room->grid[newY][newX] == 'I') {
@@ -123,6 +131,10 @@ void movePlayerInRoom(Player *player, Room *map, Direction dir) {
             if (item) {
                 pickUpItem(player, map, item);
             }
+        } else {
+            printf("Invalid input. You move back to (%d, %d).\n", oldX, oldY);
+            player->x = oldX;
+            player->y = oldY;
         }
     }
 
@@ -152,26 +164,26 @@ int movePlayerToRoom(Player *player, Room *map) {
 
 void lookAround(Room *room) {
 
-    printf("You look around the %s, size of %dx%d.\n", room->name, room->width, room->height);
+    tprintf("You look around the %s, size of %dx%d.\n", room->name, room->width, room->height);
     if (room->npcCount > 0) {
-        printf("\nYou see some beings:\n");
+        tprintf("\nYou see some beings:\n");
         for (int i = 0; i < room->npcCount; i++) {
             NPC *npc = room->npcs[i];
-            printf("%s at (%d, %d)\n", npc->name, npc->x, npc->y);
+            tprintf("%s at (%d, %d)\n", npc->name, npc->x, npc->y);
         }
     }
     if (room->itemCount > 0) {
-        printf("\nYou notice some items on the floor:\n");
+        tprintf("\nYou notice some items on the floor:\n");
         for (int i = 0; i < room->itemCount; i++) {
             Item *item = room->items[i];
-            printf("%s at (%d, %d)\n", item->name, item->x, item->y);
+            tprintf("%s at (%d, %d)\n", item->name, item->x, item->y);
         }
     }
     if (room->doorCount > 0) {
-        printf("\nThere's doors leading somewhere:\n");
+        tprintf("\nThere's doors leading somewhere:\n");
         for (int i = 0; i < room->doorCount; i++) {
             Door *door = &room->doors[i];
-            printf("Door at (%d, %d)\n", door->x, door->y);
+            tprintf("Door at (%d, %d)\n", door->x, door->y);
         }
     }
 }
@@ -211,7 +223,7 @@ void spawnGoldenCoinIfNeeded(Player *player, Room *map) {
     addItem(firstRoom, "Golden Coin", 1, 1);
     firstRoom->grid[1][1] = 'I';
 
-    printf("\nYou hear the rustle of leaves. Something important appeared somewhere. Maybe worth checking the place where your journey began?\n");
+    tprintf("\nYou hear the rustle of leaves. Something important appeared somewhere. Maybe worth checking the place where your journey began?\n");
 }
 
 void checkDragon(Player *player, Room *map) {
@@ -250,84 +262,116 @@ void interactWithNPC(Player *player, NPC *npc, Room *map, InteractionType action
     if (room->grid[player->y][player->x] == 'N') {
         if (strcmp(npc->name, "Mysterious monk") == 0) {
             if (action == INTERACT_TALK) {
-                printf("You come up to the monk and bow respectfully. He nods in return and says, \"Peace be with you, traveler.\"\n");
-                printf("The monk offers you a healing potion as a token of goodwill. Do you take it? (Y/N)\n");
-                char input[4];
-                fgets(input, sizeof(input), stdin);
-                input[strcspn(input, "\n")] = 0;
-                if (strcmp(input, "Y") == 0 || strcmp(input, "y") == 0) {
-                    Item *potion = malloc(sizeof(Item));
-                    potion->name = "Healing Potion";
-                    addItemToInventory(player, potion);
-                    printf("You received a Healing Potion!\n");
-                    printf("You bow and turn to leave, but the monk suddenly grabs your arm. \"And remember. Use it before your biggest foe, otherwise there's no guarantee what fate will befall you.\"\n");
-                } else if (strcmp(input, "N") == 0 || strcmp(input, "n") == 0){
-                    printf("You decline the monk's offer. He just shrugs.\n");
+                tprintf("You come up to the monk and bow respectfully. He nods in return and says, \"Peace be with you, traveler.\"\n");
+                int hasPotion = 0;
+
+                for (int i = 0; i < player->inventoryCount; i++) {
+                    if (strcmp(player->inventory[i]->name, "Healing potion") == 0) {
+                        hasPotion = 1; // already has potion
+                        break;
+                    }
                 }
-                printf("Before you leave, the monk offers to tell you more about this place. Would you like to hear it? (Y/N)\n");
-                //char input[4];
-                fgets(input, sizeof(input), stdin);
-                input[strcspn(input, "\n")] = 0;
-                if (strcmp(input, "Y") == 0 || strcmp(input, "y") == 0) {
-                    printf("\"You have fallen into this place because your soul seeks something. Only by overcoming the challenges here can you find what you truly desire.\n");
-                    printf("Will you be ruthless but strong and level-headed, or face the weakness within you and offer mercy to those you meet? The choice is yours, but remember, every action has its consequences.\"\n");
-                    printf("You feel something tug at your soul. You distantly hear the flapping of wings and feel something fluffy brush your legs. When you look down, nothing's there.");
-                    printf("\"But be careful. Should you try to please everyone, you may end up pleasing no one - not even yourself.\"\n");
-                } else if (strcmp(input, "N") == 0 || strcmp(input, "n") == 0){
-                    printf("The monk doesn't say anything else and let's you leave.\n");
+
+                if (!hasPotion) {
+                    char input[6];
+                    while (1) {
+                        tprintf("The monk offers you a Healing potion as a token of goodwill. Do you take it? (Y/N)\n");
+                        fgets(input, sizeof(input), stdin);
+                        input[strcspn(input, "\n")] = 0;
+
+                        if (strcmp(input, "Y") == 0 || strcmp(input, "y") == 0) {
+                            Item *potion = malloc(sizeof(Item));
+                            potion->name = "Healing potion";
+                            addItemToInventory(player, potion);
+                            tprintf("You received a Healing potion!\n");
+                            tprintf("You bow and turn to leave, but the monk suddenly grabs your arm. \"And remember. Use it before your biggest foe, otherwise there's no guarantee what fate will befall you.\"\n");
+                            break;
+                        } else if (strcmp(input, "N") == 0 || strcmp(input, "n") == 0) {
+                            tprintf("You decline the monk's offer. He just shrugs.\n");
+                            break;
+                        } else {
+                            tprintf("Invalid input. Please enter Y or N.\n");
+                        }
+                    }
+                }
+                tprintf("Before you leave, the monk offers to tell you more about this place. Would you like to hear it? (Y/N)\n");
+                char input[6];
+                while (1) {
+                    tprintf("Before you leave, the monk offers to tell you more about this place. Would you like to hear it? (Y/N)\n");
+                    fgets(input, sizeof(input), stdin);
+                    input[strcspn(input, "\n")] = 0;
+
+                    if (strcmp(input, "Y") == 0 || strcmp(input, "y") == 0) {
+                        tprintf("\"You have fallen into this place because your soul seeks something. Only by overcoming the challenges here can you find what you truly desire.\n");
+                        tprintf("Will you be ruthless but strong and level-headed, or face the weakness within you and offer mercy to those you meet? The choice is yours, but remember, every action has its consequences.\"\n");
+                        tprintf("You feel something tug at your soul. You distantly hear the flapping of wings and feel something fluffy brush your legs. When you look down, nothing's there.\n");
+                        tprintf("\"But be careful. Should you try to please everyone, you may end up pleasing no one - not even yourself.\"\n");
+                        break;
+                    } else if (strcmp(input, "N") == 0 || strcmp(input, "n") == 0) {
+                        tprintf("The monk doesn't say anything else and let's you leave.\n");
+                        break;
+                    } else {
+                        tprintf("Invalid input. Please enter Y or N.\n");
+                    }
                 }
             } else if (action == INTERACT_FIGHT) {
-                printf("You cannot fight them.\n");
+                tprintf("You cannot fight them.\n");
             } else if (action == DONT_INTERACT) {
-                printf("You chose not to interact with %s.\n", npc->name);
+                tprintf("You chose not to interact with %s.\n", npc->name);
             }
-
 
         } else if (strcmp(npc->name, "Wandering spirit") == 0 && npc->type == NEUTRAL) {
             if (action == INTERACT_FIGHT || action == INTERACT_TALK) {
-                printf("They don't seem to notice you.");
+                tprintf("They don't seem to notice you.");
             }  else if (action == DONT_INTERACT) {
-                printf("You chose not to interact with %s.\n", npc->name);
+                tprintf("You chose not to interact with %s.\n", npc->name);
             }
 
         } else if (strcmp(npc->name, "Wandering spirit") == 0 && npc->type == ENEMY) {
             if (action == INTERACT_FIGHT) {
-                fight(player, npc, room);
-                room->grid[npc->y][npc->x] = 'D';
-                printf("You feel exhausted but know your goal is near. You step through the door.\n");
-                movePlayerToRoom(player, room);
+                fight(player, npc, map);
+                room->grid[player->y][player->x] = 'D';
+                tprintf("You feel exhausted but know your goal is near. You step through the door.\n");
+                movePlayerToRoom(player, map);
             } else if (action == INTERACT_TALK) {
-               printf("\"What is it that you seek, mortal? You seem hesitant to fight me, yet you know I am an obstacle in your path.\"\n");
+               tprintf("\"What is it that you seek, mortal? You seem hesitant to fight me, yet you know I am an obstacle in your path.\"\n");
                 if (playerHasItem(player, "Golden Coin")) {
-                    printf("You suddenly remember the golden coin you found earlier. Would you like to offer it? (Y/N).\n");
-                    char input[4];
-                    fgets(input, sizeof(input), stdin);
-                    input[strcspn(input, "\n")] = 0;
-                    if (strcmp(input, "Y") == 0 || strcmp(input, "y") == 0) {
-                        printf("You offer the golden coin to the spirit. It takes the coin and without another word, it vanishes into thin air.\n");
-                        printf("\"Thank you, kind stranger.\" You hear faintly as it departs.\n");
-                        removeItemFromInventory(player, "Golden Coin");
-                        room->grid[player->y][player->x] = 'D'; // enables door
-                        printf("Without further hesitation, you step through the door.\n");
-                        movePlayerToRoom(player, room);
-                    } else if (strcmp(input, "N") == 0 || strcmp(input, "n") == 0) {
-                        printf("You decide not to offer the coin. The spirit looks disappointed.\n");
+                    tprintf("You suddenly remember the golden coin you found earlier. Would you like to offer it? (Y/N).\n");
+                    char input[6];
+                    while (1) {
+                        tprintf("You suddenly remember the golden coin you found earlier. Would you like to offer it? (Y/N)\n");
+                        fgets(input, sizeof(input), stdin);
+                        input[strcspn(input, "\n")] = 0;
+
+                        if (strcmp(input, "Y") == 0 || strcmp(input, "y") == 0) {
+                            tprintf("You offer the golden coin to the spirit. It takes the coin and without another word, it vanishes into thin air.\n");
+                            tprintf("\"Thank you, kind stranger.\" You hear faintly as it departs.\n");
+                            removeItemFromInventory(player, "Golden Coin");
+                            room->grid[player->y][player->x] = 'D'; // enables door
+                            tprintf("Without further hesitation, you step through the door.\n");
+                            movePlayerToRoom(player, map);
+                            break;
+                        } else if (strcmp(input, "N") == 0 || strcmp(input, "n") == 0) {
+                            tprintf("You decide not to offer the coin. The spirit looks disappointed.\n");
+                            break;
+                        } else {
+                            tprintf("Invalid input. Please enter Y or N.\n");
+                        }
                     }
                 } else {
-                    printf("The spirit eyes you menacingly. \"You have nothing of value to offer me. Now leave.\"\n");
+                    tprintf("The spirit eyes you menacingly. \"You have nothing of value to offer me. Now leave.\"\n");
                 }
             } else if (action == DONT_INTERACT) {
-                printf("You chose not to interact with %s.\n", npc->name);
+                tprintf("You chose not to interact with %s.\n", npc->name);
             }
-
 
         } else if (strcmp(npc->name, "Hostile spirit") == 0 || strcmp(npc->name, "Shiny hostile spirit") == 0) {
             if (action == INTERACT_FIGHT) {
-                fight(player, npc, room);
+                fight(player, npc, map);
             } else if (action == INTERACT_TALK) {
-                printf("%s looks at you menacingly. You can't get a word out.\n", npc->name);
+                tprintf("%s looks at you menacingly. You can't get a word out.\n", npc->name);
             } else if (action == DONT_INTERACT) {
-                printf("You wisely chose not to interact with %s.\n", npc->name);
+                tprintf("You wisely chose not to interact with %s.\n", npc->name);
             }
         }
     }
@@ -346,20 +390,23 @@ void showInventory(Player *player) {
 }
 
 void useItem(Player *player, char *itemName) {
+    for (int i = 0; i < strlen(itemName); i++) {
+        itemName[i] = tolower(itemName[i]);
+    }
     for (int i = 0; i < player->inventoryCount; i++) {
-        if (strcmp(itemName, "Healing Potion") == 0) {
-            printf("You used the %s.\n", itemName);
+        if (strcmp(itemName, "healing potion") == 0) {
             if (enemiesDefeated == 4) {
+                tprintf("You used the %s. Good job listening to advice.\n", itemName);
                 player->health = 200;
             } else {
                 player->health = PLAYER_MAX_HEALTH;
+                tprintf("Your health is now %d HP. Your fear might just cost you your life.\n", player->health);
             }
-            printf("Your health is now %d HP.\n", player->health);
             removeItemFromInventory(player, itemName);
             return;
         }
     }
-    printf("You don't have a %s in your inventory.\n", itemName);
+    tprintf("You don't have a %s in your inventory.\n", itemName);
 }
 
 void showCommands(void) {
@@ -373,10 +420,10 @@ void showCommands(void) {
 }
 
 void fight(Player *player, NPC *npc, Room *map) {
-    printf("You engage in combat with %s!\n", npc->name);
+    tprintf("You engage in combat with %s!\n", npc->name);
 
-    printf("%s has %d HP.\n", npc->name, npc->health);
-    printf("You have %d HP.\n", player->health);
+    tprintf("%s has %d HP.\n", npc->name, npc->health);
+    tprintf("You have %d HP.\n", player->health);
 
     int enemyMinDmg = 0;
     int enemyMaxDmg = 0;
@@ -397,40 +444,40 @@ void fight(Player *player, NPC *npc, Room *map) {
     // turn based loop
     while (player->health > 0 && npc->health > 0) {
 
-        printf("\nYour turn:\n");
+        tprintf("\nYour turn:\n");
 
         int playerDmg = randomInRange(25, 50);
         npc->health -= playerDmg;
 
         int negHealth = npc->health < 0 ? 0 : npc->health;
-        printf("You strike %s for %d damage! (Enemy HP: %d)\n", npc->name, playerDmg, negHealth);
+        tprintf("You strike %s for %d damage! (Enemy HP: %d)\n", npc->name, playerDmg, negHealth);
 
         if (npc->health <= 0) {
-            printf("\nYou defeated %s!\n", npc->name);
+            tprintf("\nYou defeated %s!\n", npc->name);
             enemiesDefeated++;
             if (npc->reward) {
-                printf("He dropped %s!\n", npc->reward->name);
+                tprintf("He dropped %s!\n", npc->reward->name);
                 addItemToInventory(player, npc->reward);
                 npc->reward = NULL; // the npc doesn't own it so it doesn't get double freed
             }
-            map->grid[npc->y][npc->x] = ' ';
             Room *room = &map[player->currentRoom];
+            room->grid[player->y][player->x] = ' ';
             removeNPCFromRoom(room, npc);
             checkDragon(player, map);
             return;
         }
 
-        printf("\nEnemy turn:\n");
+        tprintf("\nEnemy turn:\n");
 
         int enemyDmg = randomInRange(enemyMinDmg, enemyMaxDmg);
         player->health -= enemyDmg;
 
         int myHealth = player->health < 0 ? 0 : player->health;
-        printf("%s hits you for %d damage! (Your HP: %d)\n", npc->name, enemyDmg, myHealth);
+        tprintf("%s hits you for %d damage! (Your HP: %d)\n", npc->name, enemyDmg, myHealth);
 
         if (player->health <= 0) {
-            printf("\nYou have fallen in battle.\n");
-            printf("GAME OVER\n");
+            tprintf("\nYou have fallen in battle.\n");
+            tprintf("GAME OVER\n");
         }
     }
 }
@@ -438,15 +485,15 @@ void fight(Player *player, NPC *npc, Room *map) {
 void startGame(Player *player, Room *map) {
     char input[100]; // buffer for player input
 
-    printf("Welcome, %s!\n", player->name);
+    tprintf("Welcome, %s!\n", player->name);
     Room *currentRoom = &map[player->currentRoom];
-    printf("%s\n", currentRoom->description);
+    tprintf("%s\n", currentRoom->description);
     lookAround(currentRoom);
     showCommands();
-    printf("You're standing at (%d, %d).\n", player->x, player->y);
+    tprintf("You're standing at (%d, %d).\n", player->x, player->y);
 
     while (1) { // main game loop
-        printf("\nEnter command: ");
+        tprintf("\nEnter command: ");
         if (!fgets(input, sizeof(input), stdin)) {
             continue; // tries again if failed
         }
@@ -459,7 +506,7 @@ void startGame(Player *player, Room *map) {
 
         // ends game if
         if (player->health <= 0) {
-            printf("You have died. Game over.\n");
+            tprintf("You have died. Game over.\n");
             break;
         }
     }
@@ -502,7 +549,7 @@ void processCommand(Player *player, Room *map, const char *input) {
     }
     // quits game
     else if (strcmp(cmd, "quit") == 0) {
-        printf("Thanks for playing!\n");
+        tprintf("Thanks for playing!\n");
         char saveFile[128];
         snprintf(saveFile, sizeof(saveFile), "%s.dat", player->name);
 

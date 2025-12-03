@@ -4,9 +4,6 @@
 #include "map.h"
 #include "save.h"
 #include "game.h"
-#include "text.h"
-#define printf(...) tprintf(__VA_ARGS__)
-
 
 int main(int argc, char **argv) {
     Room *map = NULL;

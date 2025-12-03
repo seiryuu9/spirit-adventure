@@ -1,6 +1,6 @@
 #include "../include/text.h"
 
-int textDelay = 0; //change to 20 laterrrr
+int textDelay = 20; //change to 20 laterrrr
 
 void tprintf(const char *format, ...) {
     char buffer[1024];
