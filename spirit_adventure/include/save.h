@@ -1,8 +1,16 @@
 #ifndef SPIRIT_ADVENTURE_SAVE_H
 #define SPIRIT_ADVENTURE_SAVE_H
 
+#include <stdint.h>
+
 #include "player.h"
 #include "map.h"
+
+typedef struct {
+    char magic[4];     // "ADV1" - always 4 bytes as an identifier
+    uint32_t version;  // 1 - version number
+} SaveHeader;
+
 
 // saves the entire game state to a file
 int saveGame(const char *filename, Player *player, Room *map);
@@ -11,5 +19,3 @@ int saveGame(const char *filename, Player *player, Room *map);
 int loadGame(const char *filename, Player *player, Room *map);
 
 #endif // SPIRIT_ADVENTURE_SAVE_H
-
-//revise ??? where does it save ???

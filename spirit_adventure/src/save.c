@@ -6,36 +6,39 @@
 // writes a string to file
 static void writeString(FILE *f, const char *str) {
     size_t len = strlen(str);
-    fwrite(&len, sizeof(size_t), 1, f);
-    fwrite(str, sizeof(char), len, f);
+    fwrite(&len, sizeof(size_t), 1, f); // writes length to file
+    fwrite(str, sizeof(char), len, f); // string
 }
 
 //reads a string from file
-static void readString(FILE *f, char *buffer, size_t maxLen) {
+static void readString(FILE *f, char *buffer, size_t maxLen) { //size_t used for lengths, counts, memory sizes, never negative
     size_t len;
     fread(&len, sizeof(size_t), 1, f);
-    if (len >= maxLen) len = maxLen - 1;
+    if (len >= maxLen) len = maxLen - 1; // in case the string is too long, makes space for \0
     fread(buffer, sizeof(char), len, f);
-    buffer[len] = '\0';
+    buffer[len] = '\0'; //ends the string
 }
 
 // saves the entire game state to a binary file
 int saveGame(const char *filename, Player *player, Room *map) {
-    FILE *f = fopen(filename, "wb");
+    FILE *f = fopen(filename, "wb"); //write binary
     if (!f) {
-        perror("Failed to open file for saving");
+        perror("Failed to open file for saving"); // printf + automatically adds error info
         return 0;
     }
 
+    SaveHeader header = { {'A','D','V','1'}, 1 };
+    fwrite(&header, sizeof(SaveHeader), 1, f);
+
     // saves player
-    writeString(f, player->name);
+    writeString(f, player->name); // dynamic length
     fwrite(&player->health, sizeof(int), 1, f);
     fwrite(&player->x, sizeof(int), 1, f);
     fwrite(&player->y, sizeof(int), 1, f);
     fwrite(&player->currentRoom, sizeof(int), 1, f);
 
     // inventory
-    fwrite(&player->inventoryCount, sizeof(int), 1, f);
+    fwrite(&player->inventoryCount, sizeof(int), 1, f); // count
     for (int i = 0; i < player->inventoryCount; i++) {
         writeString(f, player->inventory[i]->name);
     }
@@ -72,14 +75,33 @@ int saveGame(const char *filename, Player *player, Room *map) {
 
 // loads only the dynamic things - others are static so you don't need to load them manually
 int loadGame(const char *filename, Player *player, Room *map) {
-    FILE *f = fopen(filename, "rb");
+    FILE *f = fopen(filename, "rb"); // read binary
     if (!f) {
         perror("Failed to open save file");
         return 0;
     }
 
+    SaveHeader header;
+    fread(&header, sizeof(SaveHeader), 1, f);
+
+    // magic check
+    if (memcmp(header.magic, "ADV1", 4) != 0) {
+        printf("Invalid save file format!\n");
+        fclose(f);
+        return 0;
+    }
+
+    // version check
+    if (header.version != 1) {
+        printf("Unsupported save version: %u\n", header.version);
+        fclose(f);
+        return 0;
+    }
+
     char buffer[128];
 
+
+    // mirrors saveGame basically
     // player
     readString(f, buffer, sizeof(buffer));
     player->name = strdup(buffer);  // allocate name dynamically

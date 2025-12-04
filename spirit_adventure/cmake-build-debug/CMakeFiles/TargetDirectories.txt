@@ -1,8 +1,0 @@
-C:/.STUFF/coding/C/adventure/spirit_adventure/cmake-build-debug/CMakeFiles/game.dir
-C:/.STUFF/coding/C/adventure/spirit_adventure/cmake-build-debug/CMakeFiles/map.dir
-C:/.STUFF/coding/C/adventure/spirit_adventure/cmake-build-debug/CMakeFiles/player.dir
-C:/.STUFF/coding/C/adventure/spirit_adventure/cmake-build-debug/CMakeFiles/save.dir
-C:/.STUFF/coding/C/adventure/spirit_adventure/cmake-build-debug/CMakeFiles/text.dir
-C:/.STUFF/coding/C/adventure/spirit_adventure/cmake-build-debug/CMakeFiles/adv.dir
-C:/.STUFF/coding/C/adventure/spirit_adventure/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/.STUFF/coding/C/adventure/spirit_adventure/cmake-build-debug/CMakeFiles/rebuild_cache.dir

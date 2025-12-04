@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../include/player.h"
-#include "../include/text.h"
 
 Player *createPlayer(char *name) {
     Player *player = malloc(sizeof(Player));

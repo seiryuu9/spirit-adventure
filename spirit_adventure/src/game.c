@@ -12,6 +12,7 @@ int dragonHornCount = 0;
 int enemiesDefeated = 0;
 int maskCount = 0;
 
+
 int randomInRange(int min, int max) {
     return min + rand() % (max - min + 1);
 } // for random dmg
@@ -166,24 +167,24 @@ void lookAround(Room *room) {
 
     tprintf("You look around the %s, size of %dx%d.\n", room->name, room->width, room->height);
     if (room->npcCount > 0) {
-        tprintf("\nYou see some beings:\n");
+        printf("\nYou see some beings:\n");
         for (int i = 0; i < room->npcCount; i++) {
             NPC *npc = room->npcs[i];
-            tprintf("%s at (%d, %d)\n", npc->name, npc->x, npc->y);
+            printf("%s at (%d, %d)\n", npc->name, npc->x, npc->y);
         }
     }
     if (room->itemCount > 0) {
-        tprintf("\nYou notice some items on the floor:\n");
+        printf("\nYou notice some items on the floor:\n");
         for (int i = 0; i < room->itemCount; i++) {
             Item *item = room->items[i];
-            tprintf("%s at (%d, %d)\n", item->name, item->x, item->y);
+            printf("%s at (%d, %d)\n", item->name, item->x, item->y);
         }
     }
     if (room->doorCount > 0) {
-        tprintf("\nThere's doors leading somewhere:\n");
+        printf("\nThere's doors leading somewhere:\n");
         for (int i = 0; i < room->doorCount; i++) {
             Door *door = &room->doors[i];
-            tprintf("Door at (%d, %d)\n", door->x, door->y);
+            printf("Door at (%d, %d)\n", door->x, door->y);
         }
     }
 }
@@ -551,7 +552,7 @@ void processCommand(Player *player, Room *map, const char *input) {
     else if (strcmp(cmd, "quit") == 0) {
         tprintf("Thanks for playing!\n");
         char saveFile[128];
-        snprintf(saveFile, sizeof(saveFile), "%s.dat", player->name);
+        snprintf(saveFile, sizeof(saveFile), "%s.save", player->name);
 
         saveGame(saveFile, player, map);
         exit(0);

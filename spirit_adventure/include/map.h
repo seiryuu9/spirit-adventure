@@ -8,6 +8,8 @@
 #define ROOM_COUNT 6
 #define MAX_DOORS 4
 #define FINAL_ROOM_INDEX 5
+#define MAX_WIDTH 4
+#define MAX_HEIGHT 4
 
 typedef enum { FRIENDLY, ENEMY, NEUTRAL } NPCType;
 
@@ -44,7 +46,7 @@ typedef struct {
     char *description;
     int width;
     int height;
-    char **grid; // ' ' = empty, 'D' = door, 'N' = npc, 'I' = item (dynamic 2D array)
+    char grid[MAX_WIDTH][MAX_HEIGHT]; // ' ' = empty, 'D' = door, 'N' = npc, 'I' = item
     Item *items[MAX_ITEMS];
     int itemCount;
     NPC *npcs[MAX_NPCS];
