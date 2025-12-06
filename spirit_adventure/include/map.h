@@ -62,7 +62,7 @@ void removeItemFromRoom(Room *room, Item *item);
 void removeNPCFromRoom(Room *room, NPC *npc);
 void addItem(Room *room, const char *name, int x, int y);
 void addNpc(Room *room, const char *name, NPCType type, int health, int x, int y, Item *reward);
-void addDoor(Room *room, Direction dir, int leadsTo, int x, int y, int exitX, int exitY); // being in header makes then accessible to other files
+void addDoor(Room *room, int leadsTo, int x, int y, int exitX, int exitY); // being in header makes then accessible to other files
 Item *getItemAt(Room *room, int x, int y);
 NPC *getNPCAt(Room *room, int x, int y);
 

@@ -28,13 +28,12 @@ void addNpc(Room *room, const char *name, NPCType type, int health, int x, int y
     room->npcCount++;
 }
 
-void addDoor(Room *room, Direction dir, int leadsTo, int x, int y, int exitX, int exitY) {
+void addDoor(Room *room, int leadsTo, int x, int y, int exitX, int exitY) {
     if (room->doorCount >= MAX_DOORS) {
         return;
     }
 
     Door *door = &room->doors[room->doorCount];
-    door->dir = dir;
     door->leadsTo = leadsTo;
     door->x = x;
     door->y = y;
@@ -72,10 +71,10 @@ Room *initializeMap(void) {
     addNpc(&map[0], "Mysterious monk", FRIENDLY, -1, 2, 2, NULL);
     addNpc(&map[0], "Wandering spirit", NEUTRAL, -1, 2, 1, NULL);
 
-    addDoor(&map[0], NORTH, 1, 1, 2, 2, 0);
-    addDoor(&map[0], WEST, 3, 0, 1, 3, 1);
-    addDoor(&map[0], SOUTH, 4, 1, 0, 2, 3);
-    addDoor(&map[0], EAST, 5, 2, 1, 0, 0);
+    addDoor(&map[0], 1, 1, 2, 2, 0);
+    addDoor(&map[0], 3, 0, 1, 3, 1);
+    addDoor(&map[0], 4, 1, 0, 2, 3);
+    addDoor(&map[0], 5, 2, 1, 0, 0);
 
 // room 2 4x4
     map[1].name = "Garden";
@@ -91,8 +90,8 @@ Room *initializeMap(void) {
     addItem(&map[1], "Fox mask part", 0, 0);
     addItem(&map[1], "Dragon horn", 2, 2);
 
-    addDoor(&map[1], SOUTH, 0, 2, 0, 1, 2);
-    addDoor(&map[1], WEST, 2, 0, 2, 3, 1);
+    addDoor(&map[1], 0, 2, 0, 1, 2);
+    addDoor(&map[1], 2, 0, 2, 3, 1);
 
 // room 3 4x4
     map[2].name = "Outer Courtyard";
@@ -110,7 +109,7 @@ Room *initializeMap(void) {
 
     addNpc(&map[2], "Hostile spirit", ENEMY, 50, 2, 1, NULL);
 
-    addDoor(&map[2], EAST, 1, 3, 1, 0, 2);
+    addDoor(&map[2], 1, 3, 1, 0, 2);
 
 // room 4 4x4
     map[3].name = "Library";
@@ -130,7 +129,7 @@ Room *initializeMap(void) {
     dragonReward1->description = "The spirit dropped a Dragon horn after being defeated.";
     addNpc(&map[3], "Shiny hostile spirit", ENEMY, 75, 2, 1, dragonReward1);
 
-    addDoor(&map[3], EAST, 0, 3, 1, 0, 1);
+    addDoor(&map[3], 0, 3, 1, 0, 1);
 
 // room 5 4x4
     map[4].name = "Tea Room";
@@ -152,10 +151,10 @@ Room *initializeMap(void) {
     addNpc(&map[4], "Shiny hostile spirit", ENEMY, 75, 0, 0, dragonReward2);
     addNpc(&map[4], "Hostile spirit", ENEMY, 50, 2, 0, NULL);
 
-    addDoor(&map[4], NORTH, 0, 2, 3, 0, 1);
+    addDoor(&map[4], 0, 2, 3, 1, 0);
 
 // room 6 1x1 - boss room
-    map[5].name = "";
+    map[5].name = "Inner Sanctum";
     map[5].description = "";
     map[5].width = 0;
     map[5].height = 0;
